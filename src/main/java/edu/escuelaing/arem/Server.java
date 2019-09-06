@@ -185,7 +185,10 @@ public class Server {
             github(out);
         } else if (path.contains("/services")) {
             services(out, path);
+        }else{
+            notFound(out);
         }
+        
 
     }
 
@@ -305,5 +308,20 @@ public class Server {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    private void notFound(PrintWriter out) {
+        out.println("HTTP/1.1 200 OK");
+        out.println("Content-Type: text/html + \r\n");
+        out.println("<!DOCTYPE html> + \r\n");
+        out.println("<html> + \r\n");
+        out.println("<head> + \r\n");
+        out.println("<meta charset=\"UTF-8\"> + \r\n");
+        out.println("<title>Proyecto</title> + \r\n");
+        out.println("</head> + \r\n");
+        out.println("<body> + \r\n");
+        out.println("<h1>Page not found</h1>" + "\r\n");
+        out.println("</body> + \r\n");
+        out.println("</html> +\r\n");
     }
 }
