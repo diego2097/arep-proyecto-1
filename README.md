@@ -21,8 +21,10 @@ El servidor contiene una pagina /index donde se encuentran todos los recursos
 - /facebook, /github: Estos recursos permiten al usuario acceder a la pagina html de facebook y github \
 - /presentacion: Este recurso por medio de un pojo informa el uso y acceso correcto del mismo 
 - /cuadrado: Este recurso por medio de un pojo permite calcular el cuadrado de un numero 
-- /cuboL: Este recurso por medio de un pojo permite calcular el cubo de un numero 
+- /cubo: Este recurso por medio de un pojo permite calcular el cubo de un numero 
 
+## Heroku  
+[Heroku](https://proyecto-arep-1.herokuapp.com/index.html)
 
 
 ## Autor
