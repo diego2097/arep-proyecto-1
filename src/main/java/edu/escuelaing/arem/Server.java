@@ -173,17 +173,17 @@ public class Server {
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (path.contains("/index")) {
+        if (path.contains("index")) {
             index(out);
-        } else if (path.equals("/img1")) {
+        } else if (path.contains("img1")) {
             image1(out);
-        } else if (path.equals("/img2")) {
+        } else if (path.contains("img2")) {
             image2(out);
-        } else if (path.equals("/facebook")) {
+        } else if (path.contains("facebook")) {
             facebook(out);
-        } else if (path.equals("/github")) {
+        } else if (path.contains("github")) {
             github(out);
-        } else if (path.contains("/services")) {
+        } else if (path.contains("services")) {
             services(out, path);
         }else{
             notFound(out);
