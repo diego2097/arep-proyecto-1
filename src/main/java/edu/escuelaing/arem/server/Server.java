@@ -28,14 +28,14 @@ import java.util.logging.Logger;
 public class Server {
 
     HashMap<String, StaticMethodHandler> dic = new <String, StaticMethodHandler>HashMap();
-    private Integer port = Integer.parseInt(System.getenv("PORT"));
+    //private Integer port = Integer.parseInt(System.getenv("PORT"));
     
     /**
      * Este metodo se encarga de crear crear el servidor para que escuche por un determinado puerto. 
      */
     public void escuchar() {
         while (true) {
-            ServerSocket serverSocket = createServer(port);
+            ServerSocket serverSocket = createServer(35000);
             Socket clientSocket = getClient(serverSocket);
 
             String path = controlRequests(clientSocket);
@@ -56,7 +56,7 @@ public class Server {
      */
     public void inicializar() {
         try {
-            String clase = "edu.escuelaing.arem.App";
+            String clase = "edu.escuelaing.arem.app.App";
             Class<?> c = Class.forName(clase);
             for (Method m : c.getMethods()) {
                 if (m.isAnnotationPresent(Web.class)) {
