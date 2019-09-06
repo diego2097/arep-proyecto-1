@@ -109,7 +109,7 @@ public class Server {
      */
     private static void index(PrintWriter out) {
         System.out.println("y aqui tambien entra");
-        out.println("HTTP/1.1 200 OK"+ "\r\n");
+        out.println("HTTP/1.1 200 OK");
         out.println("Content-Type: text/html" + "\r\n");
         out.println("<!DOCTYPE html>" + "\r\n");
         out.println("<html>" + "\r\n");
