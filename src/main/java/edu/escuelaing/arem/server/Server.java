@@ -5,6 +5,7 @@
  */
 package edu.escuelaing.arem.server;
 
+import edu.escuelaing.arem.framework.Handler;
 import edu.escuelaing.arem.framework.StaticMethodHandler;
 import static edu.escuelaing.arem.server.Server.controlRequests;
 import edu.escuelaing.arem.framework.Web;
@@ -18,8 +19,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
 
 /**
  *
@@ -28,10 +32,11 @@ import java.util.logging.Logger;
 public class Server {
 
     HashMap<String, StaticMethodHandler> dic = new <String, StaticMethodHandler>HashMap();
-  //  private Integer port = Integer.parseInt(System.getenv("PORT"));
-    
+    //  private Integer port = Integer.parseInt(System.getenv("PORT"));
+
     /**
-     * Este metodo se encarga de crear crear el servidor para que escuche por un determinado puerto. 
+     * Este metodo se encarga de crear crear el servidor para que escuche por un
+     * determinado puerto.
      */
     public void escuchar() {
         while (true) {
@@ -51,11 +56,24 @@ public class Server {
     }
 
     /**
-     * Este metodo se encarga de inicializar el hashmap con los metodos de la clase App que tengan la 
-     * anotacion @web. 
+     * Este metodo se encarga de inicializar el hashmap con los metodos de la
+     * clase App que tengan la anotacion @web.
      */
     public void inicializar() {
         try {
+            Reflections reflections = new Reflections("edu.escuelaing.arem.app", new SubTypesScanner(false));
+            Set<Class<? extends Object>> allClasses = reflections.getSubTypesOf(Object.class);
+
+            for (Class clase : allClasses) {
+                for (Method method : clase.getMethods()) {
+                    if (method.isAnnotationPresent(Web.class)) {
+                        Web web = method.getAnnotation(Web.class);
+                        StaticMethodHandler hand = new StaticMethodHandler(method);
+                        dic.put(method.getName(), hand);
+                    }
+                }
+            }
+/*
             String clase = "edu.escuelaing.arem.app.App";
             Class<?> c = Class.forName(clase);
             for (Method m : c.getMethods()) {
@@ -64,14 +82,16 @@ public class Server {
                     dic.put(m.getName(),
                             new StaticMethodHandler(c.getDeclaredMethod(m.getName(), params)));
                 }
-            }
-        } catch (Exception ex) {}
+            }*/
+        } catch (Exception ex) {
+        }
     }
 
     /**
-     * Este metodo se encarga de leer los datos de entrada que envia el cliente. 
+     * Este metodo se encarga de leer los datos de entrada que envia el cliente.
+     *
      * @param clientSocket
-     * @return 
+     * @return
      */
     public static String controlRequests(Socket clientSocket) {
         BufferedReader in = null;
@@ -104,37 +124,40 @@ public class Server {
     }
 
     /**
-     * Este metodo se encarga de crear la pagina html index. 
-     * @param out PrintWriter buffer de salida para poder enviar datos al cliente. 
+     * Este metodo se encarga de crear la pagina html index.
+     *
+     * @param out PrintWriter buffer de salida para poder enviar datos al
+     * cliente.
      */
     private static void index(PrintWriter out) {
         System.out.println("y aqui tambien entra");
-         out.println("HTTP/1.1 200 OK ");
+        out.println("HTTP/1.1 200 OK \r");
         out.println("Content-Type: text/html \r\n");
         out.println("\r\n");
-        out.println("<!DOCTYPE html>" );
-        out.println("<html>" );
-        out.println("<head>" );
-        out.println("<meta charset=\"UTF-8\">" );
-        out.println("<title>Proyecto</title>" );
-        out.println("</head>" );
-        out.println("<body>" );
-        out.println("<h1>Proyecto arquitectura empresarial</h1>" );
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset=\"UTF-8\">");
+        out.println("<title>Proyecto</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>Proyecto arquitectura empresarial</h1>");
         out.println("<p>Esta app es capaz de entregar paginas html e imagenes tipo PNG</p>");
         out.println("<ul>");
-        out.println("<li><a href=\"/img1\">Desert Tree</a></li>");
-        out.println("<li><a href=\"/img2\">Other image </a> </li>");
-        out.println("<li><a href=\"/facebook\">Facebook</a> </li>");
-        out.println("<li><a href=\"/github\">Github</a> </li>");
+        out.println("<li><a href=\"/img1.PNG\">Desert Tree</a></li>");
+        out.println("<li><a href=\"/img2.PNG\">Other image </a> </li>");
+        out.println("<li><a href=\"/facebook.html\">Facebook</a> </li>");
+        out.println("<li><a href=\"/github.html\">Github</a> </li>");
         out.println("</ul>");
-        out.println("</body>" );
-        out.println("</html>" );
+        out.println("</body>");
+        out.println("</html>");
     }
 
     /**
-     * Este metodo crea el servidor con el puerto definido 
-     * @param i el puerto por donde se desea el servicio. 
-     * @return 
+     * Este metodo crea el servidor con el puerto definido
+     *
+     * @param i el puerto por donde se desea el servicio.
+     * @return
      */
     private ServerSocket createServer(int puerto) {
         try {
@@ -149,9 +172,11 @@ public class Server {
     }
 
     /**
-     * Este metodo se encarga de esperar a que un cliente realice una peticion. y conectarse a este.  
-     * @param serverSocket el servidor. 
-     * @return Socket cliente que realizo la peticion. 
+     * Este metodo se encarga de esperar a que un cliente realice una peticion.
+     * y conectarse a este.
+     *
+     * @param serverSocket el servidor.
+     * @return Socket cliente que realizo la peticion.
      */
     private Socket getClient(ServerSocket serverSocket) {
         try {
@@ -166,8 +191,9 @@ public class Server {
 
     /**
      * Este metodo se encarga de dirigir cada path a su metodo correspondiente
-     * @param clientSocket El puerto cliente. 
-     * @param path El path que solicita el cliente. 
+     *
+     * @param clientSocket El puerto cliente.
+     * @param path El path que solicita el cliente.
      */
     private void write(Socket clientSocket, String path) {
         PrintWriter out = null;
@@ -177,32 +203,34 @@ public class Server {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("entraaa aqui " + path);
-        if (path.equals("/index")) {
+        if (path.equals("/index.html")) {
             index(out);
-        } else if (path.equals("/img1")) {
+        } else if (path.equals("/img1.PNG")) {
             image1(out);
-        } else if (path.equals("/img2")) {
+        } else if (path.equals("/img2.PNG")) {
             image2(out);
-        } else if (path.equals("/facebook")) {
+        } else if (path.equals("/facebook.html")) {
             facebook(out);
-        } else if (path.equals("/github")) {
+        } else if (path.equals("/github.html")) {
             github(out);
         } else if (path.contains("services")) {
             services(out, path);
-        }else{
+        } else {
             notFound(out);
         }
-        
 
     }
 
     /**
-     * Este metodo se encarga de desplegar una imagen en el browser. 
-     * @param out PrintWriter buffer de salida para poder enviar datos al cliente. 
+     * Este metodo se encarga de desplegar una imagen en el browser.
+     *
+     * @param out PrintWriter buffer de salida para poder enviar datos al
+     * cliente.
      */
     private void image1(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK");
-        out.println("Content-Type: text/html + \r\n");
+        out.println("HTTP/1.1 200 OK \r");
+        out.println("Content-Type: text/html \r\n");
+        out.println("\r\n");
         out.println("<!DOCTYPE html>+ \r\n");
         out.println("<html> + \r\n");
         out.println("<head> + \r\n");
@@ -213,16 +241,19 @@ public class Server {
         out.println("<img src=\"https://cdn.pixabay.com/photo/2018/03/03/03/11/tree-3194803_960_720.jpg\"></img> + \r\n");
         out.println("</body> + \r\n");
         out.println("</html> + \r\n");
-        out.println("<a href=\"/index\">Volver</a>");
+        out.println("<a href=\"/index.html\">Volver</a>");
     }
 
     /**
-     * Este metodo se encarga de desplegar una imagen en el browser. 
-     * @param out PrintWriter buffer de salida para poder enviar datos al cliente. 
+     * Este metodo se encarga de desplegar una imagen en el browser.
+     *
+     * @param out PrintWriter buffer de salida para poder enviar datos al
+     * cliente.
      */
     private void image2(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK");
-        out.println("Content-Type: text/html + \r\n");
+        out.println("HTTP/1.1 200 OK \r");
+        out.println("Content-Type: text/html \r\n");
+        out.println("\r\n");
         out.println("<!DOCTYPE html> + \r\n");
         out.println("<html> + \r\n");
         out.println("<head> + \r\n");
@@ -233,17 +264,20 @@ public class Server {
         out.println("<img src=\"https://www.tekcrispy.com/wp-content/uploads/2017/12/bancos-imagenes-gratis.jpg\"></img>" + "\r\n");
         out.println("</body> + \r\n");
         out.println("</html> +\r\n");
-        out.println("<a href=\"/index\">Volver</a>");
+        out.println("<a href=\"/index.html\">Volver</a>");
     }
 
     /**
-     * Este metodo se encarga de desplegar la pagina html de facebook. 
-     * @param out PrintWriter buffer de salida para poder enviar datos al cliente. 
+     * Este metodo se encarga de desplegar la pagina html de facebook.
+     *
+     * @param out PrintWriter buffer de salida para poder enviar datos al
+     * cliente.
      */
     private void facebook(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK");
-        out.println("Content-Type: text/html + \r\n");
-        out.println("<a href=\"/index\">Volver</a>");
+        out.println("HTTP/1.1 200 OK \r");
+        out.println("Content-Type: text/html \r\n");
+        out.println("\r\n");
+        out.println("<a href=\"/index.html\">Volver</a>");
         URL url = null;
         try {
             url = new URL("https://www.facebook.com");
@@ -261,13 +295,16 @@ public class Server {
     }
 
     /**
-     * Este metodo se encarga de desplegar la pagina html de twitter. 
-     * @param out PrintWriter buffer de salida para poder enviar datos al cliente. 
+     * Este metodo se encarga de desplegar la pagina html de twitter.
+     *
+     * @param out PrintWriter buffer de salida para poder enviar datos al
+     * cliente.
      */
     private void github(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK");
-        out.println("Content-Type: text/html + \r\n");
-        out.println("<a href=\"/index\">Volver</a>");
+        out.println("HTTP/1.1 200 OK \r");
+        out.println("Content-Type: text/html \r\n");
+        out.println("\r\n");
+        out.println("<a href=\"/index.html\">Volver</a>");
         URL url = null;
         try {
             url = new URL("https://github.com");
@@ -284,18 +321,21 @@ public class Server {
     }
 
     /**
-     * Este metodo se encarga de llamar a los pojos basado en la url solicitada. 
-     * @param out PrintWriter buffer de salida para poder enviar datos al cliente. 
-     * @param path path solicitado por el cliente. 
+     * Este metodo se encarga de llamar a los pojos basado en la url solicitada.
+     *
+     * @param out PrintWriter buffer de salida para poder enviar datos al
+     * cliente.
+     * @param path path solicitado por el cliente.
      */
     private void services(PrintWriter out, String path) {
         String[] url = path.split("/");
         String methodname = url[3];
-        out.println("HTTP/1.1 200 OK");
-        out.println("Content-Type: text/html + \r\n");
+        out.println("HTTP/1.1 200 OK \r");
+        out.println("Content-Type: text/html \r\n");
+        out.println("\r\n");
         if (methodname.contains(":")) {
             String[] cadena = methodname.split(":");
-            String method = cadena[0]; 
+            String method = cadena[0];
             int temp = Integer.parseInt(cadena[1]);
             Object[] param = new Object[]{temp};
             try {
@@ -313,7 +353,7 @@ public class Server {
     }
 
     private void notFound(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK \r\n");
+        out.println("HTTP/1.1 200 OK \r");
         out.println("Content-Type: text/html \r\n");
         out.println("\r\n");
         out.println("<!DOCTYPE html>");
@@ -323,7 +363,7 @@ public class Server {
         out.println("<title>Proyecto</title> ");
         out.println("</head> ");
         out.println("<body> ");
-        out.println("<h1>Page not found</h1>" );
+        out.println("<h1>Page not found</h1>");
         out.println("</body>");
         out.println("</html>");
     }
