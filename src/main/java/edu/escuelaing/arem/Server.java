@@ -174,6 +174,7 @@ public class Server {
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("entraaa aqui " + path);
         if (path.equals("/index")) {
             index(out);
         } else if (path.equals("/img1")) {
