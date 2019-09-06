@@ -125,9 +125,9 @@ public class Server {
      * cliente.
      */
     private static void index(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK \r");
-        out.println("Content-Type: text/html \r\n");
-        out.println("\r\n");
+        out.println("HTTP/1.1 200 OK");
+        out.println("Content-Type: text/html");
+        out.println("");
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println("<head>");
