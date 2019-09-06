@@ -142,6 +142,8 @@ public class Server {
         out.print("<li><a href=\"/img2.PNG\">Other image </a> </li>");    
         out.print("<li><a href=\"/facebook.html\">Facebook</a> </li>");
         out.print("<li><a href=\"/github.html\">Github</a> </li>");
+        out.print("<li><a href=\"/cuadrado.html\">App para hallar el cuadrado de un numero</a> </li>");
+        out.print("<li><a href=\"/cubo.html\">App para hallar el cubo de un numero</a> </li>");
         out.print("</ul>");
         out.print("</body>");
         out.print("</html>");
@@ -209,9 +211,14 @@ public class Server {
             github(out);
         } else if (path.contains("services")) {
             services(out, path);
-        } else {
-            notFound(out);
+        }else if (path.equals("/cuadrado.html")) {
+            cuadrado(out);
+        }else if (path.equals("/cubo.html")) {
+            cubo(out);
         }
+        else {
+            notFound(out);
+        } 
 
     }
 
@@ -374,6 +381,14 @@ public class Server {
             return Integer.parseInt(System.getenv("PORT"));
         }
         return 4567; //returns default port if heroku-port isn't set (i.e.on localhost)
+    }
+
+    private void cuadrado(PrintWriter out) {
+        
+    }
+
+    private void cubo(PrintWriter out) {
+        
     }
 	
 }
