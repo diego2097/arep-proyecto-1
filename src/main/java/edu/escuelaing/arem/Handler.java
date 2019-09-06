@@ -10,9 +10,7 @@ package edu.escuelaing.arem;
  * @author 2125509
  */
 public interface Handler {
-    
-    public void procesar();
-    
-    
-    
+
+    public String procesar() throws Exception;
+    public String procesar(Object[] arg) throws Exception;
 }

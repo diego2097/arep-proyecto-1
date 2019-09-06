@@ -11,16 +11,38 @@ import java.lang.reflect.Method;
  *
  * @author 2125509
  */
-public class StaticMethodHandler implements Handler{
+public class StaticMethodHandler implements Handler {
 
-    
     private Method metodo;
     
-    public void procesar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public StaticMethodHandler(Method metodo) {
+        this.metodo = metodo;
     }
     
-    
-    
-    
+    /**
+     * Este metodo realiza la invocacion del metodo requerido
+     * @return Una string con el resultado de la invocacion del metodo.
+     * @throws Exception 
+     */
+    public String procesar() throws Exception {
+        return (String) metodo.invoke(metodo, null);
+    }
+
+    /**
+     * Este metodo realiza la invocacion del metodo requerido 
+     * @param arg el argumento que tendra el metodo 
+     * @return Una string con el resultado de la invocacion del metodo.
+     * @throws Exception 
+     */
+    public String procesar(Object[] arg) throws Exception {
+        return (String) metodo.invoke(metodo, arg);
+    }
+
+    public Method getMetodo() {
+        return metodo;
+    }
+
+    public void setMetodo(Method metodo) {
+        this.metodo = metodo;
+    }
 }

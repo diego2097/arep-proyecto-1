@@ -6,15 +6,15 @@
 package edu.escuelaing.arem;
 
 /**
- *
+ * Esta clase es la encarga de controlar el programa. 
  * @author 2125509
  */
 public class Controller {
     
      public static void main( String[] args )
     {
-        App app = new App();
+        Server app = new Server();
         app.inicializar();
-        
+        app.escuchar();
     }
 }
