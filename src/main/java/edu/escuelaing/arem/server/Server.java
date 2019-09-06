@@ -108,9 +108,9 @@ public class Server {
                 if (inputLine.contains("GET")) {
                     String[] get = inputLine.split(" ");
                     path = get[1];
-                } /*else if (inputLine.contains("POST")) {
+                } else if (inputLine.contains("POST")) {
                     break;
-                }*/
+                }
             }
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -222,20 +222,20 @@ public class Server {
      * cliente.
      */
     private void image1(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK \r");
-        out.println("Content-Type: text/html \r\n");
-        out.println("\r\n");
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset=\"UTF-8\">");
-        out.println("<title>Proyecto</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<img src=\"https://cdn.pixabay.com/photo/2018/03/03/03/11/tree-3194803_960_720.jpg\"></img>");
-        out.println("</body>");
-        out.println("</html>");
-        out.println("<a href=\"/index.html\">Volver</a>");
+        out.print("HTTP/1.1 200 OK \r");
+        out.print("Content-Type: text/html \r\n");
+        out.print("\r\n");
+        out.print("<!DOCTYPE html>");
+        out.print("<html>");
+        out.print("<head>");
+        out.print("<meta charset=\"UTF-8\">");
+        out.print("<title>Proyecto</title>");
+        out.print("</head>");
+        out.print("<body>");
+        out.print("<img src=\"https://cdn.pixabay.com/photo/2018/03/03/03/11/tree-3194803_960_720.jpg\"></img>");
+        out.print("</body>");
+        out.print("</html>");
+        out.print("<a href=\"/index.html\">Volver</a>");
         out.flush();
     }
 
@@ -246,20 +246,20 @@ public class Server {
      * cliente.
      */
     private void image2(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK \r");
-        out.println("Content-Type: text/html \r\n");
-        out.println("\r\n");
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset=\"UTF-8\">");
-        out.println("<title>Proyecto</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<img src=\"https://www.tekcrispy.com/wp-content/uploads/2017/12/bancos-imagenes-gratis.jpg\"></img>" + "\r\n");
-        out.println("</body>");
-        out.println("</html>");
-        out.println("<a href=\"/index.html\">Volver</a>");
+        out.print("HTTP/1.1 200 OK \r");
+        out.print("Content-Type: text/html \r\n");
+        out.print("\r\n");
+        out.print("<!DOCTYPE html>");
+        out.print("<html>");
+        out.print("<head>");
+        out.print("<meta charset=\"UTF-8\">");
+        out.print("<title>Proyecto</title>");
+        out.print("</head>");
+        out.print("<body>");
+        out.print("<img src=\"https://www.tekcrispy.com/wp-content/uploads/2017/12/bancos-imagenes-gratis.jpg\"></img>" + "\r\n");
+        out.print("</body>");
+        out.print("</html>");
+        out.print("<a href=\"/index.html\">Volver</a>");
         out.flush();
     }
 
@@ -270,10 +270,10 @@ public class Server {
      * cliente.
      */
     private void facebook(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK \r");
-        out.println("Content-Type: text/html \r\n");
-        out.println("\r\n");
-        out.println("<a href=\"/index.html\">Volver</a>");
+        out.print("HTTP/1.1 200 OK \r");
+        out.print("Content-Type: text/html \r\n");
+        out.print("\r\n");
+        out.print("<a href=\"/index.html\">Volver</a>");
         URL url = null;
         try {
             url = new URL("https://www.facebook.com");
@@ -298,10 +298,10 @@ public class Server {
      * cliente.
      */
     private void github(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK \r");
-        out.println("Content-Type: text/html \r\n");
-        out.println("\r\n");
-        out.println("<a href=\"/index.html\">Volver</a>");
+        out.print("HTTP/1.1 200 OK \r");
+        out.print("Content-Type: text/html \r\n");
+        out.print("\r\n");
+        out.print("<a href=\"/index.html\">Volver</a>");
         URL url = null;
         try {
             url = new URL("https://github.com");
@@ -328,9 +328,9 @@ public class Server {
     private void services(PrintWriter out, String path) {
         String[] url = path.split("/");
         String methodname = url[3];
-        out.println("HTTP/1.1 200 OK \r");
-        out.println("Content-Type: text/html \r\n");
-        out.println("\r\n");
+        out.print("HTTP/1.1 200 OK \r");
+        out.print("Content-Type: text/html \r\n");
+        out.print("\r\n");
         if (methodname.contains(":")) {
             String[] cadena = methodname.split(":");
             String method = cadena[0];
@@ -352,19 +352,19 @@ public class Server {
     }
 
     private void notFound(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK \r");
-        out.println("Content-Type: text/html \r\n");
-        out.println("\r\n");
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset=\"UTF-8\">");
-        out.println("<title>Proyecto</title> ");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>Page not found</h1>");
-        out.println("</body>");
-        out.println("</html>");
+        out.print("HTTP/1.1 200 OK \r");
+        out.print("Content-Type: text/html \r\n");
+        out.print("\r\n");
+        out.print("<!DOCTYPE html>");
+        out.print("<html>");
+        out.print("<head>");
+        out.print("<meta charset=\"UTF-8\">");
+        out.print("<title>Proyecto</title> ");
+        out.print("</head>");
+        out.print("<body>");
+        out.print("<h1>Page not found</h1>");
+        out.print("</body>");
+        out.print("</html>");
         out.flush();
     }
     
