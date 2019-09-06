@@ -173,7 +173,6 @@ public class Server {
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
         } catch (IOException ex) {
-            System.out.println("error");
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("entraaa aqui " + path);
