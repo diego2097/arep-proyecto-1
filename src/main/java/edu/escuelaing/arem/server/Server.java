@@ -40,7 +40,7 @@ public class Server {
      */
     public void escuchar() {
         while (true) {
-            ServerSocket serverSocket = createServer(4567);
+            ServerSocket serverSocket = createServer(getPort());
             Socket clientSocket = getClient(serverSocket);
 
             String path = controlRequests(clientSocket);
@@ -355,4 +355,13 @@ public class Server {
         out.println("</body>");
         out.println("</html>");
     }
+    
+     private static int getPort() {
+
+        if (System.getenv("PORT") != null) {
+            return Integer.parseInt(System.getenv("PORT"));
+        }
+        return 4567; //returns default port if heroku-port isn't set (i.e.on localhost)
+    }
+	
 }
