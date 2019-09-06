@@ -109,16 +109,17 @@ public class Server {
      */
     private static void index(PrintWriter out) {
         System.out.println("y aqui tambien entra");
-        out.println("HTTP/1.1 200 OK");
-        out.println("Content-Type: text/html" + "\r\n");
-        out.println("<!DOCTYPE html>" + "\r\n");
-        out.println("<html>" + "\r\n");
-        out.println("<head>" + "\r\n");
-        out.println("<meta charset=\"UTF-8\">" + "\r\n");
-        out.println("<title>Proyecto</title>" + "\r\n");
-        out.println("</head>" + "\r\n");
-        out.println("<body>" + "\r\n");
-        out.println("<h1>Proyecto arquitectura empresarial</h1>" + "\r\n");
+         out.println("HTTP/1.1 200 OK ");
+        out.println("Content-Type: text/html \r\n");
+        out.println("\r\n");
+        out.println("<!DOCTYPE html>" );
+        out.println("<html>" );
+        out.println("<head>" );
+        out.println("<meta charset=\"UTF-8\">" );
+        out.println("<title>Proyecto</title>" );
+        out.println("</head>" );
+        out.println("<body>" );
+        out.println("<h1>Proyecto arquitectura empresarial</h1>" );
         out.println("<p>Esta app es capaz de entregar paginas html e imagenes tipo PNG</p>");
         out.println("<ul>");
         out.println("<li><a href=\"/img1\">Desert Tree</a></li>");
@@ -126,8 +127,8 @@ public class Server {
         out.println("<li><a href=\"/facebook\">Facebook</a> </li>");
         out.println("<li><a href=\"/github\">Github</a> </li>");
         out.println("</ul>");
-        out.println("</body>" + "\r\n");
-        out.println("</html>" + "\r\n");
+        out.println("</body>" );
+        out.println("</html>" );
     }
 
     /**
@@ -312,17 +313,18 @@ public class Server {
     }
 
     private void notFound(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK");
-        out.println("Content-Type: text/html + \r\n");
-        out.println("<!DOCTYPE html> + \r\n");
-        out.println("<html> + \r\n");
-        out.println("<head> + \r\n");
-        out.println("<meta charset=\"UTF-8\"> + \r\n");
-        out.println("<title>Proyecto</title> + \r\n");
-        out.println("</head> + \r\n");
-        out.println("<body> + \r\n");
-        out.println("<h1>Page not found</h1>" + "\r\n");
-        out.println("</body> + \r\n");
-        out.println("</html> +\r\n");
+        out.println("HTTP/1.1 200 OK \r\n");
+        out.println("Content-Type: text/html \r\n");
+        out.println("\r\n");
+        out.println("<!DOCTYPE html>");
+        out.println("<html> ");
+        out.println("<head> ");
+        out.println("<meta charset=\"UTF-8\"> ");
+        out.println("<title>Proyecto</title> ");
+        out.println("</head> ");
+        out.println("<body> ");
+        out.println("<h1>Page not found</h1>" );
+        out.println("</body>");
+        out.println("</html>");
     }
 }
