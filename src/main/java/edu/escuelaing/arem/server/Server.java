@@ -129,22 +129,22 @@ public class Server {
         out.println("Content-Type: text/html");
         out.println("");
         out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset=\"UTF-8\">");
-        out.println("<title>Proyecto</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>Proyecto arquitectura empresarial</h1>");
-        out.println("<p>Esta app es capaz de entregar paginas html e imagenes tipo PNG</p>");
-        out.println("<ul>");
-        out.println("<li><a href=\"/img1.PNG\">Desert Tree</a></li>");
-        out.println("<li><a href=\"/img2.PNG\">Other image </a> </li>");    
-        out.println("<li><a href=\"/facebook.html\">Facebook</a> </li>");
-        out.println("<li><a href=\"/github.html\">Github</a> </li>");
-        out.println("</ul>");
-        out.println("</body>");
-        out.println("</html>");
+        out.print("<html>");
+        out.print("<head>");
+        out.print("<meta charset=\"UTF-8\">");
+        out.print("<title>Proyecto</title>");
+        out.print("</head>");
+        out.print("<body>");
+        out.print("<h1>Proyecto arquitectura empresarial</h1>");
+        out.print("<p>Esta app es capaz de entregar paginas html e imagenes tipo PNG</p>");
+        out.print("<ul>");
+        out.print("<li><a href=\"/img1.PNG\">Desert Tree</a></li>");
+        out.print("<li><a href=\"/img2.PNG\">Other image </a> </li>");    
+        out.print("<li><a href=\"/facebook.html\">Facebook</a> </li>");
+        out.print("<li><a href=\"/github.html\">Github</a> </li>");
+        out.print("</ul>");
+        out.print("</body>");
+        out.print("</html>");
         out.flush();
     }
 
