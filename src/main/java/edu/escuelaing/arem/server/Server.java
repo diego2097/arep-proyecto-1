@@ -41,7 +41,7 @@ public class Server {
      * determinado puerto.
      */
     public void escuchar() {
-        while (true) {
+        for(;;) {
             ServerSocket serverSocket = createServer(getPort());
             Socket clientSocket = getClient(serverSocket);
 
@@ -108,9 +108,9 @@ public class Server {
                 if (inputLine.contains("GET")) {
                     String[] get = inputLine.split(" ");
                     path = get[1];
-                } else if (inputLine.contains("POST")) {
+                } /*else if (inputLine.contains("POST")) {
                     break;
-                }
+                }*/
             }
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
