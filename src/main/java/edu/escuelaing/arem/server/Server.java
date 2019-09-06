@@ -139,7 +139,7 @@ public class Server {
         out.println("<p>Esta app es capaz de entregar paginas html e imagenes tipo PNG</p>");
         out.println("<ul>");
         out.println("<li><a href=\"/img1.PNG\">Desert Tree</a></li>");
-        out.println("<li><a href=\"/img2.PNG\">Other image </a> </li>");
+        out.println("<li><a href=\"/img2.PNG\">Other image </a> </li>");    
         out.println("<li><a href=\"/facebook.html\">Facebook</a> </li>");
         out.println("<li><a href=\"/github.html\">Github</a> </li>");
         out.println("</ul>");
@@ -224,16 +224,16 @@ public class Server {
         out.println("HTTP/1.1 200 OK \r");
         out.println("Content-Type: text/html \r\n");
         out.println("\r\n");
-        out.println("<!DOCTYPE html>+ \r\n");
-        out.println("<html> + \r\n");
-        out.println("<head> + \r\n");
-        out.println("<meta charset=\"UTF-8\">+ \r\n");
-        out.println("<title>Proyecto</title> + \r\n");
-        out.println("</head> + \r\n");
-        out.println("<body> + \r\n");
-        out.println("<img src=\"https://cdn.pixabay.com/photo/2018/03/03/03/11/tree-3194803_960_720.jpg\"></img> + \r\n");
-        out.println("</body> + \r\n");
-        out.println("</html> + \r\n");
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset=\"UTF-8\">");
+        out.println("<title>Proyecto</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<img src=\"https://cdn.pixabay.com/photo/2018/03/03/03/11/tree-3194803_960_720.jpg\"></img>");
+        out.println("</body>");
+        out.println("</html>");
         out.println("<a href=\"/index.html\">Volver</a>");
     }
 
@@ -247,16 +247,16 @@ public class Server {
         out.println("HTTP/1.1 200 OK \r");
         out.println("Content-Type: text/html \r\n");
         out.println("\r\n");
-        out.println("<!DOCTYPE html> + \r\n");
-        out.println("<html> + \r\n");
-        out.println("<head> + \r\n");
-        out.println("<meta charset=\"UTF-8\"> + \r\n");
-        out.println("<title>Proyecto</title> + \r\n");
-        out.println("</head> + \r\n");
-        out.println("<body> + \r\n");
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset=\"UTF-8\">");
+        out.println("<title>Proyecto</title>");
+        out.println("</head>");
+        out.println("<body>");
         out.println("<img src=\"https://www.tekcrispy.com/wp-content/uploads/2017/12/bancos-imagenes-gratis.jpg\"></img>" + "\r\n");
-        out.println("</body> + \r\n");
-        out.println("</html> +\r\n");
+        out.println("</body>");
+        out.println("</html>");
         out.println("<a href=\"/index.html\">Volver</a>");
     }
 
@@ -280,7 +280,7 @@ public class Server {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
             String inputLine = null;
             while ((inputLine = reader.readLine()) != null) {
-                out.println(inputLine + "\r\n");
+                out.println(inputLine);
             }
 
         } catch (IOException x) {
@@ -307,7 +307,7 @@ public class Server {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
             String inputLine = null;
             while ((inputLine = reader.readLine()) != null) {
-                out.println(inputLine + "\r\n");
+                out.println(inputLine);
             }
         } catch (IOException x) {
         }
@@ -350,12 +350,12 @@ public class Server {
         out.println("Content-Type: text/html \r\n");
         out.println("\r\n");
         out.println("<!DOCTYPE html>");
-        out.println("<html> ");
-        out.println("<head> ");
-        out.println("<meta charset=\"UTF-8\"> ");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset=\"UTF-8\">");
         out.println("<title>Proyecto</title> ");
-        out.println("</head> ");
-        out.println("<body> ");
+        out.println("</head>");
+        out.println("<body>");
         out.println("<h1>Page not found</h1>");
         out.println("</body>");
         out.println("</html>");
