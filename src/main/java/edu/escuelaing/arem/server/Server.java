@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.escuelaing.arem;
+package edu.escuelaing.arem.server;
 
-import static edu.escuelaing.arem.Server.controlRequests;
-import edu.escuelaing.arem.annotations.Web;
+import edu.escuelaing.arem.framework.StaticMethodHandler;
+import static edu.escuelaing.arem.server.Server.controlRequests;
+import edu.escuelaing.arem.framework.Web;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

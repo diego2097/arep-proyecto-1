@@ -5,6 +5,8 @@
  */
 package edu.escuelaing.arem;
 
+import edu.escuelaing.arem.server.Server;
+
 /**
  * Esta clase es la encarga de controlar el programa. 
  * @author 2125509

@@ -1,6 +1,6 @@
-package edu.escuelaing.arem;
+package edu.escuelaing.arem.app;
 
-import edu.escuelaing.arem.annotations.Web;
+import edu.escuelaing.arem.framework.Web;
 import static java.lang.Math.pow;
 /**
  * Hello world!
