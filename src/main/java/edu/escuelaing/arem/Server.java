@@ -127,7 +127,6 @@ public class Server {
         out.println("</ul>");
         out.println("</body>" + "\r\n");
         out.println("</html>" + "\r\n");
-        out.flush();
     }
 
     /**
