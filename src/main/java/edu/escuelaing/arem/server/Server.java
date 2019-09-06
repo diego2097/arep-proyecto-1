@@ -145,6 +145,7 @@ public class Server {
         out.println("</ul>");
         out.println("</body>");
         out.println("</html>");
+        out.flush();
     }
 
     /**
@@ -235,6 +236,7 @@ public class Server {
         out.println("</body>");
         out.println("</html>");
         out.println("<a href=\"/index.html\">Volver</a>");
+        out.flush();
     }
 
     /**
@@ -258,6 +260,7 @@ public class Server {
         out.println("</body>");
         out.println("</html>");
         out.println("<a href=\"/index.html\">Volver</a>");
+        out.flush();
     }
 
     /**
@@ -285,6 +288,7 @@ public class Server {
 
         } catch (IOException x) {
         }
+        out.flush();
     }
 
     /**
@@ -311,6 +315,7 @@ public class Server {
             }
         } catch (IOException x) {
         }
+        out.flush();
     }
 
     /**
@@ -343,6 +348,7 @@ public class Server {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        out.flush();
     }
 
     private void notFound(PrintWriter out) {
@@ -359,6 +365,7 @@ public class Server {
         out.println("<h1>Page not found</h1>");
         out.println("</body>");
         out.println("</html>");
+        out.flush();
     }
     
      private static int getPort() {
