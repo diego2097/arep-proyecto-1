@@ -107,6 +107,7 @@ public class Server {
      * @param out PrintWriter buffer de salida para poder enviar datos al cliente. 
      */
     private static void index(PrintWriter out) {
+        System.out.println("y aqui tambien entra");
         out.println("HTTP/1.1 200 OK");
         out.println("Content-Type: text/html" + "\r\n");
         out.println("<!DOCTYPE html>" + "\r\n");
@@ -212,7 +213,6 @@ public class Server {
         out.println("</body> + \r\n");
         out.println("</html> + \r\n");
         out.println("<a href=\"/index\">Volver</a>");
-        out.flush();
     }
 
     /**
@@ -233,7 +233,6 @@ public class Server {
         out.println("</body> + \r\n");
         out.println("</html> +\r\n");
         out.println("<a href=\"/index\">Volver</a>");
-        out.flush();
     }
 
     /**
