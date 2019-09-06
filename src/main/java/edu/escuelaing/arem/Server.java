@@ -33,7 +33,7 @@ public class Server {
      */
     public void escuchar() {
         while (true) {
-            ServerSocket serverSocket = createServer(35000);
+            ServerSocket serverSocket = createServer(4567);
             Socket clientSocket = getClient(serverSocket);
 
             String path = controlRequests(clientSocket);
