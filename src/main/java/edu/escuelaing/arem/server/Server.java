@@ -73,16 +73,6 @@ public class Server {
                     }
                 }
             }
-/*
-            String clase = "edu.escuelaing.arem.app.App";
-            Class<?> c = Class.forName(clase);
-            for (Method m : c.getMethods()) {
-                if (m.isAnnotationPresent(Web.class)) {
-                    Class[] params = m.getParameterTypes();
-                    dic.put(m.getName(),
-                            new StaticMethodHandler(c.getDeclaredMethod(m.getName(), params)));
-                }
-            }*/
         } catch (Exception ex) {
         }
     }
@@ -130,7 +120,6 @@ public class Server {
      * cliente.
      */
     private static void index(PrintWriter out) {
-        System.out.println("y aqui tambien entra");
         out.println("HTTP/1.1 200 OK \r");
         out.println("Content-Type: text/html \r\n");
         out.println("\r\n");
@@ -202,7 +191,6 @@ public class Server {
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("entraaa aqui " + path);
         if (path.equals("/index.html")) {
             index(out);
         } else if (path.equals("/img1.PNG")) {
