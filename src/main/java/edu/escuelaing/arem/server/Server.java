@@ -10,6 +10,7 @@ import edu.escuelaing.arem.framework.StaticMethodHandler;
 import static edu.escuelaing.arem.server.Server.controlRequests;
 import edu.escuelaing.arem.framework.Web;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jdk.nashorn.internal.objects.Global.load;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 
@@ -61,15 +63,18 @@ public class Server {
      */
     public void inicializar() {
         try {
-            Reflections reflections = new Reflections("edu.escuelaing.arem.app", new SubTypesScanner(false));
-            Set<Class<? extends Object>> allClasses = reflections.getSubTypesOf(Object.class);
-
-            for (Class clase : allClasses) {
-                for (Method method : clase.getMethods()) {
-                    if (method.isAnnotationPresent(Web.class)) {
-                        Web web = method.getAnnotation(Web.class);
-                        StaticMethodHandler hand = new StaticMethodHandler(method);
-                        dic.put(method.getName(), hand);
+            File f = new File(System.getProperty("user.dir") + "/src/main/java/edu/escuelaing/arem/app");
+            File[] ficheros = f.listFiles();
+            //Reflections reflections = new Reflections("apps", new SubTypesScanner(false));
+            //Set<Class<?>> allClasses = reflections.getSubTypesOf(Object.class);
+            for (File fs :ficheros){         
+                String name = fs.getName();
+                name = "edu.escuelaing.arem.app." + name.substring(0,name.indexOf("."));
+                Class<?> c = Class.forName(name);
+                for (Method m : c.getMethods()) {
+                    if (m.getAnnotations().length > 0){
+                        StaticMethodHandler handler = new StaticMethodHandler(m);
+                        dic.put(m.getName(), handler);
                     }
                 }
             }
