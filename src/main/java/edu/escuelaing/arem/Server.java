@@ -173,7 +173,7 @@ public class Server {
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (path.equals("/index")) {
+        if (path.contains("/index")) {
             index(out);
         } else if (path.equals("/img1")) {
             image1(out);

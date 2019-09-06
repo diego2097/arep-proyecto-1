@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* edu.escuelaing.arem.Controller
+web: java -cp target/classes:target/dependency/* edu.escuelaing.arem.Controller
