@@ -27,13 +27,14 @@ import java.util.logging.Logger;
 public class Server {
 
     HashMap<String, StaticMethodHandler> dic = new <String, StaticMethodHandler>HashMap();
-
+    private Integer port = Integer.parseInt(System.getenv("PORT"));
+    
     /**
      * Este metodo se encarga de crear crear el servidor para que escuche por un determinado puerto. 
      */
     public void escuchar() {
         while (true) {
-            ServerSocket serverSocket = createServer(4567);
+            ServerSocket serverSocket = createServer(port);
             Socket clientSocket = getClient(serverSocket);
 
             String path = controlRequests(clientSocket);
