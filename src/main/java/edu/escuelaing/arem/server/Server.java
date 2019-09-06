@@ -125,10 +125,10 @@ public class Server {
      * cliente.
      */
     private static void index(PrintWriter out) {
-        out.println("HTTP/1.1 200 OK");
-        out.println("Content-Type: text/html");
-        out.println("");
-        out.println("<!DOCTYPE html>");
+        out.print("HTTP/1.1 200 OK \r");
+        out.print("Content-Type: text/html \r\n");
+        out.print("\r\n");
+        out.print("<!DOCTYPE html>");
         out.print("<html>");
         out.print("<head>");
         out.print("<meta charset=\"UTF-8\">");
