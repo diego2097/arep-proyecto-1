@@ -41,7 +41,7 @@ public class Server {
      * determinado puerto.
      */
     public void escuchar() {
-        for(;;) {
+        for (;;) {
             ServerSocket serverSocket = createServer(getPort());
             Socket clientSocket = getClient(serverSocket);
 
@@ -67,12 +67,12 @@ public class Server {
             File[] ficheros = f.listFiles();
             //Reflections reflections = new Reflections("apps", new SubTypesScanner(false));
             //Set<Class<?>> allClasses = reflections.getSubTypesOf(Object.class);
-            for (File fs :ficheros){         
+            for (File fs : ficheros) {
                 String name = fs.getName();
-                name = "edu.escuelaing.arem.app." + name.substring(0,name.indexOf("."));
+                name = "edu.escuelaing.arem.app." + name.substring(0, name.indexOf("."));
                 Class<?> c = Class.forName(name);
                 for (Method m : c.getMethods()) {
-                    if (m.getAnnotations().length > 0){
+                    if (m.getAnnotations().length > 0) {
                         StaticMethodHandler handler = new StaticMethodHandler(m);
                         dic.put(m.getName(), handler);
                     }
@@ -139,7 +139,7 @@ public class Server {
         out.print("<p>Esta app es capaz de entregar paginas html e imagenes tipo PNG</p>");
         out.print("<ul>");
         out.print("<li><a href=\"/img1.PNG\">Desert Tree</a></li>");
-        out.print("<li><a href=\"/img2.PNG\">Other image </a> </li>");    
+        out.print("<li><a href=\"/img2.PNG\">Other image </a> </li>");
         out.print("<li><a href=\"/facebook.html\">Facebook</a> </li>");
         out.print("<li><a href=\"/github.html\">Github</a> </li>");
         out.print("<li><a href=\"/cuadrado.html\">App para hallar el cuadrado de un numero</a> </li>");
@@ -209,16 +209,17 @@ public class Server {
             facebook(out);
         } else if (path.equals("/github.html")) {
             github(out);
-        } else if (path.contains("services")) {
-            services(out, path);
-        }else if (path.equals("/cuadrado.html")) {
+        } else if (path.equals("/cuadrado.html")) {
             cuadrado(out);
-        }else if (path.equals("/cubo.html")) {
+        } else if (path.contains("/resultado.html")) {
+            resultado(out, path,"cuadrado");
+        } else if (path.equals("/cubo.html")) {
             cubo(out);
-        }
-        else {
+        } else if (path.contains("/resultado2.html")) {
+            resultado(out, path,"cubo");
+        }else {
             notFound(out);
-        } 
+        }
 
     }
 
@@ -332,31 +333,19 @@ public class Server {
      * cliente.
      * @param path path solicitado por el cliente.
      */
-    private void services(PrintWriter out, String path) {
-        String[] url = path.split("/");
-        String methodname = url[3];
-        out.print("HTTP/1.1 200 OK \r");
-        out.print("Content-Type: text/html \r\n");
-        out.print("\r\n");
-        if (methodname.contains(":")) {
-            String[] cadena = methodname.split(":");
-            String method = cadena[0];
-            int temp = Integer.parseInt(cadena[1]);
-            Object[] param = new Object[]{temp};
-            try {
-                out.println(dic.get(method).procesar(param));
-            } catch (Exception ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
-                out.println(dic.get(methodname).procesar());
-            } catch (Exception ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    private String services(PrintWriter out, String path, String metodo) {
+        String[] url = path.split("=");
+        String atributo = url[1];
+        int temp = Integer.parseInt(atributo);
+        Object[] param = new Object[]{temp};
+        try {
+            return (dic.get(metodo).procesar(param));
+        } catch (Exception ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
-        out.flush();
+        return null;
     }
+
 
     private void notFound(PrintWriter out) {
         out.print("HTTP/1.1 200 OK \r");
@@ -374,8 +363,8 @@ public class Server {
         out.print("</html>");
         out.flush();
     }
-    
-     private static int getPort() {
+
+    private static int getPort() {
 
         if (System.getenv("PORT") != null) {
             return Integer.parseInt(System.getenv("PORT"));
@@ -384,11 +373,66 @@ public class Server {
     }
 
     private void cuadrado(PrintWriter out) {
-        
+        out.print("HTTP/1.1 200 OK \r");
+        out.print("Content-Type: text/html \r\n");
+        out.print("\r\n");
+        out.print("<!DOCTYPE html>");
+        out.print("<html>");
+        out.print("<head>");
+        out.print("<meta charset=\"UTF-8\">");
+        out.print("<title>Proyecto</title>");
+        out.print("</head>");
+        out.print("<body>");
+        out.print("<h1>Proyecto arquitectura empresarial</h1>");
+        out.print("<h2>Pojo para el cuadrado de un numero</h2>");
+        out.print("<form action=\"/resultado.html\" >");
+        out.print("Ingrese un numero: <input type=\"text\" name=\"numero\"><br>");
+        out.print("<button type=\"submit\" value=\"Calcular\">Calcular cuadrado</button>");
+        out.print("</form>");
+        out.print("</body>");
+        out.print("</html>");
+        out.flush();
     }
 
     private void cubo(PrintWriter out) {
-        
+        out.print("HTTP/1.1 200 OK \r");
+        out.print("Content-Type: text/html \r\n");
+        out.print("\r\n");
+        out.print("<!DOCTYPE html>");
+        out.print("<html>");
+        out.print("<head>");
+        out.print("<meta charset=\"UTF-8\">");
+        out.print("<title>Proyecto</title>");
+        out.print("</head>");
+        out.print("<body>");
+        out.print("<h1>Proyecto arquitectura empresarial</h1>");
+        out.print("<h2>Pojo para el cubo de un numero</h2>");
+        out.print("<form action=\"/resultado2.html\" >");
+        out.print("Ingrese un numero: <input type=\"text\" name=\"fname\"><br>");
+        out.print("<button type=\"submit\">Calcular cubo</button>");
+        out.print("</body>");
+        out.print("</html>");
+        out.flush();
     }
-	
+
+    private void resultado(PrintWriter out, String path,String pojo) {
+        String resultado = services(out,path,pojo); 
+        out.print("HTTP/1.1 200 OK \r");
+        out.print("Content-Type: text/html \r\n");
+        out.print("\r\n");
+        out.print("<!DOCTYPE html>");
+        out.print("<html>");
+        out.print("<head>");
+        out.print("<meta charset=\"UTF-8\">");
+        out.print("<title>Proyecto</title> ");
+        out.print("</head>");
+        out.print("<body>");
+        out.print("<h1>result</h1>");
+        out.print(resultado);
+        out.print("</body>");
+        out.print("</html>");
+        out.flush();
+
+    }
+
 }
