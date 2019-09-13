@@ -27,4 +27,19 @@ public class App2 {
         		"</html>\n" + 
         		"";
     }
+    
+     @Web("coseno")
+    public static String coseno(Integer numero) {
+        return "<!DOCTYPE html>\n" + 
+        		"<html>\n" + 
+        		"<head>\n" + 
+        		"  <meta charset=\"utf-8\" />\n" + 
+        		"  <title>ARSW - Laboratorio 1</title>  \n" + 
+        		"</head>\n" + 
+        		"<body>   \n" + 
+        		"<h1>"+numero+" al cuadrado es "+(int)pow(numero,2)+"</h1>  \n" + 
+        		"</body>\n" + 
+        		"</html>\n" + 
+        		"";
+    }
 }
