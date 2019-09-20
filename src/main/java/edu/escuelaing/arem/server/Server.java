@@ -30,30 +30,33 @@ import javax.imageio.ImageIO;
  *
  * @author 2125509
  */
-public class Server {
+public class Server implements Runnable {
 
-    HashMap<String, StaticMethodHandler> dic = new <String, StaticMethodHandler>HashMap();
+    private static HashMap<String, StaticMethodHandler> dic = new <String, StaticMethodHandler>HashMap();
     private static final ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+    private Socket clientSocket;
+    private ServerSocket serverSocket;
     //  private Integer port = Integer.parseInt(System.getenv("PORT"));
 
     /**
      * Este metodo se encarga de crear crear el servidor para que escuche por un
      * determinado puerto.
      */
-    public void escuchar() {
-        for (;;) {
-            ServerSocket serverSocket = createServer(getPort());
-            Socket clientSocket = getClient(serverSocket);
-
-            String path = controlRequests(clientSocket);
-            System.out.println(path);
-            write(clientSocket, path);
-            try {
-                clientSocket.close();
-                serverSocket.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    public Server(Socket clientSocket) {
+        this.clientSocket = clientSocket;
+    }
+    
+    
+    @Override
+    public void run() {
+        String path = controlRequests(clientSocket);
+        System.out.println(path);
+        write(clientSocket, path);
+        try {
+            clientSocket.close();
+            serverSocket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -61,7 +64,7 @@ public class Server {
      * Este metodo se encarga de inicializar el hashmap con los metodos de la
      * clase App que tengan la anotacion @web.
      */
-    public void inicializar() {
+    public static void inicializar() {
         try {
             File f = new File(System.getProperty("user.dir") + "/src/main/java/edu/escuelaing/arem/app");
             File[] ficheros = f.listFiles();
@@ -116,42 +119,6 @@ public class Server {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
         return path;
-    }
-
-    /**
-     * Este metodo crea el servidor con el puerto definido
-     *
-     * @param i el puerto por donde se desea el servicio.
-     * @return
-     */
-    private ServerSocket createServer(int puerto) {
-        try {
-            ServerSocket serverSocket = new ServerSocket(puerto);
-            return serverSocket;
-        } catch (IOException e) {
-            System.err.println("Could not listen on port: 35000.");
-            System.exit(1);
-            return null;
-        }
-
-    }
-
-    /**
-     * Este metodo se encarga de esperar a que un cliente realice una peticion.
-     * y conectarse a este.
-     *
-     * @param serverSocket el servidor.
-     * @return Socket cliente que realizo la peticion.
-     */
-    private Socket getClient(ServerSocket serverSocket) {
-        try {
-            System.out.println("Listo para recibir ...");
-            Socket clientSocket = serverSocket.accept();
-            return clientSocket;
-        } catch (IOException e) {
-            getClient(serverSocket);
-        }
-        return null;
     }
 
     /**
@@ -249,12 +216,14 @@ public class Server {
         out.print("\r\n");
         String[] url = path.split("/");
         String cad = url[2];
-        String metodo = ""; 
+        String metodo = "";
         String param = "";
         System.out.println(cad);
         if (cad.contains("?")) {
             System.out.println("entraa");
-            url = cad.split("\\?"); metodo = url[0]; cad = url[1];
+            url = cad.split("\\?");
+            metodo = url[0];
+            cad = url[1];
             url = cad.split("=");
             param = url[1];
             int temp = Integer.parseInt(param);
@@ -294,6 +263,18 @@ public class Server {
         out.flush();
     }
 
+    private static ServerSocket createServer(int puerto) {
+        try {
+            ServerSocket serverSocket = new ServerSocket(puerto);
+            return serverSocket;
+        } catch (IOException e) {
+            System.err.println("Could not listen on port: 35000.");
+            System.exit(1);
+            return null;
+        }
+
+    }
+
     private static int getPort() {
 
         if (System.getenv("PORT") != null) {
@@ -302,34 +283,4 @@ public class Server {
         return 4567; //returns default port if heroku-port isn't set (i.e.on localhost)
     }
 
-    /*public static void readApps(PrintWriter out,String path) throws IOException {
-        int idApps = path.indexOf("/pojos");
-        String subStrg = "";
-        System.out.println(path + "  line ");
-        for (int ji = idApps; ji < path.length() && path.charAt(ji) != ' '; ++ji) {
-            subStrg += path.charAt(ji);
-        } 
-        try {
-            out.write("HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n" + "\r\n");
-            if (subStrg.contains(":")) {
-                int id = subStrg.indexOf(":");
-                out.write(dic.get(subStrg.substring(0, id)).process(new Object[]{subStrg.substring(id + 1)}));
-            } else {
-                out.write(dic.get(subStrg).process());
-            }
-            out.close();
-        } catch (Exception e) {
-            notFound();
-        }
-        String[] url = path.split("=");
-        String atributo = url[1];
-        int temp = Integer.parseInt(atributo);
-        Object[] param = new Object[]{temp};
-        try {
-            return (dic.get(metodo).procesar(param));
-        } catch (Exception ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;   
-    }*/
 }
