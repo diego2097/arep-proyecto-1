@@ -1,2 +1,3 @@
 target/
-*.tmp
+~WRL005.tmp
+nbactions.xml
