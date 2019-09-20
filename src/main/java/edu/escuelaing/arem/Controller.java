@@ -26,23 +26,11 @@ public class Controller {
 
     public static void main(String[] args) {
         
-        ServerSocket serverSocket = SocketServer.createServer(getPort());
+        ServerSocket serverSocket = SocketServer.createServer();
         Server.inicializar();
         while (true) {
             Socket clientSocket = ClientSocket.getClient(serverSocket);
             service.execute(new Server(clientSocket));
         }
     }
-
- 
-    private static int getPort() {
-
-        if (System.getenv("PORT") != null) {
-            return Integer.parseInt(System.getenv("PORT"));
-        }
-        return 4567; //returns default port if heroku-port isn't set (i.e.on localhost)
-    }
-    
-    
-    
 }
